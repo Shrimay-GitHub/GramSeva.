@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
+    <title>Village Connect - Service Request System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏘️</text></svg>">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <div class="nav-logo">GS</div>
+                <div>
+                    <div class="nav-brand-text">GramSeva</div>
+                    <div class="nav-subtitle">Service Request System</div>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="/track" class="nav-link">Track</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <div class="nav-user">
+                <div class="nav-notification">🔔</div>
+                <div class="nav-avatar"><img src="images/indian-man-7061278_640.jpg"></div>
+                <div class="nav-user-info">
+                    <div class="nav-user-name">John Doe</div>
+                    <div class="nav-user-location">Mumbai, Maharashtra</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-links">
+            <a href="/">Dashboard</a>
+            <a href="#services">Services</a>
+            <a href="/track">Track</a>
+            <a href="/admin.html">Admin</a>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="quick-report">
+                <h3>Quick Report</h3>
+                <button class="report-btn">+ New Request</button>
+                <button class="emergency-btn">🚨 Emergency</button>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Services</h4>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active">🏠 All Services</a></li>
+                    <li><a href="#" onclick="showServiceDetails('water')">💧 Water Supply</a></li>
+                    <li><a href="#" onclick="showServiceDetails('electricity')">⚡ Electricity</a></li>
+                    <li><a href="#" onclick="showServiceDetails('roads')">🛣️ Roads</a></li>
+                    <li><a href="#" onclick="showServiceDetails('healthcare')">🏥 Healthcare</a></li>
+                    <li><a href="#" onclick="showServiceDetails('education')">📚 Education</a></li>
+                    <li><a href="#" onclick="showServiceDetails('sanitation')">🗑️ Sanitation</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Account</h4>
+                <ul class="sidebar-menu">
+                    <li><a href="#">📊 My Requests</a></li>
+                    <li><a href="#">⚙️ Settings</a></li>
+                    <li><a href="#">❓ Help</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-container">
+                    <div class="hero-left">
+                        <h1 class="hero-title">
+                            Your Voice,<br>
+                            <span class="title-accent">Our Action</span>
+                        </h1>
+                        <p class="hero-description">
+                            Report village issues instantly. Track progress transparently. 
+                            Build a better community together with our comprehensive 
+                            service request system.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showReportForm()">
+                                ➕ Submit New Request
+                            </button>
+                            <button class="btn btn-secondary" onclick="window.location.href='/track'">
+                                🔍 Track Request
+                            </button>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <span class="hero-stat-number" id="hero-total">1,247</span>
+                                <span class="hero-stat-label">Issues Resolved</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="hero-stat-number">89%</span>
+                                <span class="hero-stat-label">Satisfaction Rate</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span class="hero-stat-number">24hrs</span>
+                                <span class="hero-stat-label">Avg Response</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-right">
+                        <div class="quick-report-card">
+                            <div class="quick-report-header">
+                                <h3>Quick Report</h3>
+                                <span class="status-badge active">Active</span>
+                            </div>
+                            <div class="quick-report-items">
+                                <div class="quick-report-item high">
+                                    <div class="report-icon">🔴</div>
+                                    <div class="report-content">
+                                        <div class="report-title">Street Light Issue</div>
+                                        <div class="report-location">Main Road, Ward 3</div>
+                                    </div>
+                                    <div class="priority-badge high">High</div>
+                                </div>
+                                <div class="quick-report-item medium">
+                                    <div class="report-icon">🔵</div>
+                                    <div class="report-content">
+                                        <div class="report-title">Water Supply</div>
+                                        <div class="report-location">Sector 2, Ward 1</div>
+                                    </div>
+                                    <div class="priority-badge medium">Medium</div>
+                                </div>
+                                <div class="quick-report-item low">
+                                    <div class="report-icon">🟢</div>
+                                    <div class="report-content">
+                                        <div class="report-title">Road Repair</div>
+                                        <div class="report-location">Village Square</div>
+                                    </div>
+                                    <div class="priority-badge low">Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <div class="stats-container">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Active Requests</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-number">1,247</div>
+                        <div class="stat-label">Resolved Issues</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-number">24hrs</div>
+                        <div class="stat-label">Avg Response</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number">2,847</div>
+                        <div class="stat-label">Active Citizens</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Grid -->
+            <section id="services" class="services-grid content-section">
+                <div class="service-card water">
+                    <div class="service-icon">💧</div>
+                    <h3 class="service-title">Water Supply</h3>
+                    <p class="service-description">Report issues with water supply, quality, or infrastructure</p>
+                    <div class="service-stats">
+                        <div class="service-stat">
+                            <span class="service-stat-number">34</span>
+                            <span class="service-stat-label">Open</span>
+                        </div>
+                        <div class="service-stat">
+                            <span class="service-stat-number">201</span>
+                            <span class="service-stat-label">Resolved</span>
+                        </div>
+                    </div>
+                    <button class="service-details-btn" onclick="showServiceDetails('water')">View Details</button>
+                </div>
+
+                <div class="service-card electricity">
+                    <div class="service-icon">⚡</div>
+                    <h3 class="service-title">Electricity</h3>
+                    <p class="service-description">Power outages, faulty connections, and electrical issues</p>
+                    <div class="service-stats">
+                        <div class="service-stat">
+                            <span class="service-stat-number">12</span>
+                            <span class="service-stat-label">Open</span>
+                        </div>
+                        <div class="service-stat">
+                            <span class="service-stat-number">89</span>
+                            <span class="service-stat-label">Resolved</span>
+                        </div>
+                    </div>
+                    <button class="service-details-btn" onclick="showServiceDetails('electricity')">View Details</button>
+                </div>
+
+                <div class="service-card roads">
+                    <div class="service-icon">🛣️</div>
+                    <h3 class="service-title">Roads & Infrastructure</h3>
+                    <p class="service-description">Potholes, damaged roads, and infrastructure problems</p>
+                    <div class="service-stats">
+                        <div class="service-stat">
+                            <span class="service-stat-number">34</span>
+                            <span class="service-stat-label">Open</span>
+                        </div>
+                        <div class="service-stat">
+                            <span class="service-stat-number">201</span>
+                            <span class="service-stat-label">Resolved</span>
+                        </div>
+                    </div>
+                    <button class="service-details-btn" onclick="showServiceDetails('roads')">View Details</button>
+                </div>
+
+                <div class="service-card healthcare">
+                    <div class="service-icon">🏥</div>
+                    <h3 class="service-title">Healthcare</h3>
+                    <p class="service-description">Medical facilities, ambulance services, and health issues</p>
+                    <div class="service-stats">
+                        <div class="service-stat">
+                            <span class="service-stat-number">8</span>
+                            <span class="service-stat-label">Open</span>
+                        </div>
+                        <div class="service-stat">
+                            <span class="service-stat-number">67</span>
+                            <span class="service-stat-label">Resolved</span>
+                        </div>
+                    </div>
+                    <button class="service-details-btn" onclick="showServiceDetails('healthcare')">View Details</button>
+                </div>
+
+                <div class="service-card education">
+                    <div class="service-icon">📚</div>
+                    <h3 class="service-title">Education</h3>
+                    <p class="service-description">School facilities, transportation, and educational resources</p>
+                    <div class="service-stats">
+                        <div class="service-stat">
+                            <span class="service-stat-number">15</span>
+                            <span class="service-stat-label">Open</span>
+                        </div>
+                        <div class="service-stat">
+                            <span class="service-stat-number">43</span>
+                            <span class="service-stat-label">Resolved</span>
+                        </div>
+                    </div>
+                    <button class="service-details-btn" onclick="showServiceDetails('education')">View Details</button>
+                </div>
+
+                <div class="service-card sanitation">
+                    <div class="service-icon">🗑️</div>
+                    <h3 class="service-title">Sanitation</h3>
+                    <p class="service-description">Waste management, cleanliness, and sanitation issues</p>
+                    <div class="service-stats">
+                        <div class="service-stat">
+                            <span class="service-stat-number">19</span>
+                            <span class="service-stat-label">Open</span>
+                        </div>
+                        <div class="service-stat">
+                            <span class="service-stat-number">78</span>
+                            <span class="service-stat-label">Resolved</span>
+                        </div>
+                    </div>
+                    <button class="service-details-btn" onclick="showServiceDetails('sanitation')">View Details</button>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section-main">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">❓ Frequently Asked Questions</h2>
+                        <p class="section-subtitle">Find quick answers to common questions</p>
+                    </div>
+                    <div class="faq-container-main">
+                        <div class="faq-item-main">
+                            <div class="faq-question-main">
+                                <h3>How do I report an issue in my village?</h3>
+                                <span class="faq-icon-main"></span>
+                            </div>
+                            <div class="faq-answer-main">
+                                <p>Simply click the "Submit New Request" button, fill out the form with details about the issue, add photos if needed, and submit. You'll receive a tracking ID to monitor progress.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item-main">
+                            <div class="faq-question-main">
+                                <h3>How long does it take to resolve issues?</h3>
+                                <span class="faq-icon-main"></span>
+                            </div>
+                            <div class="faq-answer-main">
+                                <p>Response times vary by issue type. Emergency issues are addressed within 24 hours, while routine maintenance may take 3-7 days. You can track real-time progress using your request ID.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item-main">
+                            <div class="faq-question-main">
+                                <h3>Can I track my submitted requests?</h3>
+                                <span class="faq-icon-main"></span>
+                            </div>
+                            <div class="faq-answer-main">
+                                <p>Yes! Use the "Track Request" button or visit the tracking page. Enter your request ID to see current status, updates, and estimated completion time.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item-main">
+                            <div class="faq-question-main">
+                                <h3>What types of issues can I report?</h3>
+                                <span class="faq-icon-main"></span>
+                            </div>
+                            <div class="faq-answer-main">
+                                <p>You can report water supply issues, electricity problems, road maintenance, healthcare concerns, education facilities, sanitation issues, and other village infrastructure problems.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item-main">
+                            <div class="faq-question-main">
+                                <h3>Is there a cost for using this service?</h3>
+                                <span class="faq-icon-main"></span>
+                            </div>
+                            <div class="faq-answer-main">
+                                <p>No, Village Connect is completely free for all residents. Our goal is to improve village infrastructure and quality of life for everyone in the community.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item-main">
+                            <div class="faq-question-main">
+                                <h3>How do I report emergency issues?</h3>
+                                <span class="faq-icon-main"></span>
+                            </div>
+                            <div class="faq-answer-main">
+                                <p>For emergencies, use the red "Emergency Report" button in the Quick Report sidebar or mark your issue as "High Priority" when submitting. Emergency issues receive immediate attention.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Requests Section -->
+            <section id="my-requests" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>📊 My Requests</h2>
+                    <p>Track and manage your submitted requests</p>
+                </div>
+                <div class="requests-container">
+                    <div class="request-card">
+                        <div class="request-header">
+                            <span class="request-id">#REQ-001</span>
+                            <span class="status-badge pending">Pending</span>
+                        </div>
+                        <h3>Water Supply Issue</h3>
+                        <p>Low water pressure in Main Street area</p>
+                        <div class="request-meta">
+                            <span>📅 Submitted: 2 days ago</span>
+                            <span>📍 Main Street, Ward 3</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>⚙️ Settings</h2>
+                    <p>Manage your account and preferences</p>
+                </div>
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3>Profile Information</h3>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" value="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Village</label>
+                            <input type="text" class="form-control" value="Greenfield Village">
+                        </div>
+                        <button class="btn btn-primary">Update Profile</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help Section -->
+            <section id="help" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>❓ Help & Support</h2>
+                    <p>Get help with using the Village Connect platform</p>
+                </div>
+                <div class="help-container">
+                    <div class="help-card">
+                        <h3>How to Report an Issue</h3>
+                        <p>Click on "New Request" button and fill out the form with issue details.</p>
+                    </div>
+                    <div class="help-card">
+                        <h3>Track Your Requests</h3>
+                        <p>Use the tracking ID provided after submission to monitor progress.</p>
+                    </div>
+                    <div class="help-card">
+                        <h3>Contact Support</h3>
+                        <p>Email: support@villageconnect.gov | Phone: +91-XXXX-XXXX</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Report Form Section -->
+            <section id="report-form" class="report-form-section" style="display: none;">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h2>📝 Report an Issue</h2>
+                        <p>Fill out the form below to report an issue in your village</p>
+                        <button class="close-form-btn" id="closeFormBtn">✕</button>
+                    </div>
+                    
+                    <div id="alert-container"></div>
+                    
+                    <form id="issueForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name *</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="village" class="form-label">Village Name *</label>
+                            <input type="text" id="village" name="village" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category" class="form-label">Issue Category *</label>
+                            <select id="category" name="category" class="form-control" required>
+                                <option value="">Select Category</option>
+                                <option value="Water Supply">💧 Water Supply</option>
+                                <option value="Electricity">⚡ Electricity</option>
+                                <option value="Road">🛣️ Road/Infrastructure</option>
+                                <option value="Healthcare">🏥 Healthcare</option>
+                                <option value="Education">📚 Education</option>
+                                <option value="Sanitation">🗑️ Sanitation</option>
+                                <option value="Other">🔧 Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="priority" class="form-label">Priority Level *</label>
+                            <select id="priority" name="priority" class="form-control" required>
+                                <option value="Low">🟢 Low</option>
+                                <option value="Medium" selected>🟡 Medium</option>
+                                <option value="High">🔴 High</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="form-label">Issue Description *</label>
+                            <textarea id="description" name="description" class="form-control" 
+                                      placeholder="Please describe the issue in detail..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location" class="form-label">Location (Optional)</label>
+                            <input type="text" id="location" name="location" class="form-control" 
+                                   placeholder="e.g., Near Main Market, Behind School">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Upload Photo (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="photo" name="photo" accept="image/*">
+                                <label for="photo" class="file-upload-label">
+                                    <div class="file-upload-icon">📷</div>
+                                    <div class="file-upload-text">Click to upload photo</div>
+                                    <div class="file-upload-subtext">or drag and drop</div>
+                                </label>
+                            </div>
+                            <div id="image-preview"></div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                Submit Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- My Requests Section -->
+            <section id="my-requests" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>📊 My Requests</h2>
+                    <p>Track all your submitted service requests</p>
+                </div>
+                
+                <div class="requests-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Pending">Pending</button>
+                    <button class="filter-btn" data-filter="In Progress">In Progress</button>
+                    <button class="filter-btn" data-filter="Resolved">Resolved</button>
+                </div>
+                
+                <div id="requests-list" class="requests-grid">
+                    <!-- Requests will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>⚙️ Settings</h2>
+                    <p>Manage your account preferences</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>👤 Profile Information</h3>
+                        <form id="profile-form">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="profile-name" value="John Doe" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="profile-email" value="john.doe@example.com" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="profile-phone" value="+91 98765 43210" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Village/Area</label>
+                                <input type="text" id="profile-village" value="Mumbai, Maharashtra" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>🔔 Notifications</h3>
+                        <div class="setting-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <div>
+                                <strong>Email Notifications</strong>
+                                <p>Get updates about your requests via email</p>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <div>
+                                <strong>SMS Notifications</strong>
+                                <p>Receive SMS updates for urgent matters</p>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <div>
+                                <strong>Push Notifications</strong>
+                                <p>Browser notifications for real-time updates</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>🌐 Preferences</h3>
+                        <div class="form-group">
+                            <label>Language</label>
+                            <select class="form-control">
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी (Hindi)</option>
+                                <option value="mr">मराठी (Marathi)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help Section -->
+            <section id="help" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h2>❓ Help & Support</h2>
+                    <p>Get help with using Village Connect</p>
+                </div>
+                
+                <div class="help-grid">
+                    <div class="help-card">
+                        <div class="help-icon">📝</div>
+                        <h3>How to Report an Issue</h3>
+                        <p>Learn how to submit service requests effectively</p>
+                        <button class="btn btn-secondary" onclick="showHelpModal('report')">Learn More</button>
+                    </div>
+                    
+                    <div class="help-card">
+                        <div class="help-icon">🔍</div>
+                        <h3>Track Your Requests</h3>
+                        <p>Monitor the status of your submitted requests</p>
+                        <button class="btn btn-secondary" onclick="showHelpModal('track')">Learn More</button>
+                    </div>
+                    
+                    <div class="help-card">
+                        <div class="help-icon">📞</div>
+                        <h3>Emergency Contacts</h3>
+                        <p>Important numbers for urgent situations</p>
+                        <button class="btn btn-secondary" onclick="showHelpModal('emergency')">View Contacts</button>
+                    </div>
+                    
+                    <div class="help-card">
+                        <div class="help-icon">💬</div>
+                        <h3>Contact Support</h3>
+                        <p>Get in touch with our support team</p>
+                        <button class="btn btn-primary" onclick="showContactForm()">Contact Us</button>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- Help Modal -->
+            <div id="help-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-title">Help</h3>
+                        <button class="close-btn" onclick="closeHelpModal()">✕</button>
+                    </div>
+                    <div id="modal-body" class="modal-body">
+                        <!-- Content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

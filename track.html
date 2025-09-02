@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Issue - Seva</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏘️</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Track Your Issue</h1>
+            <p class="tagline">Check the status of your reported issue</p>
+        </div>
+
+        <div class="card">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <a href="/" class="btn">← Back to Home</a>
+            </div>
+
+            <div class="form-group">
+                <label for="issueId">Enter Your Issue ID</label>
+                <div style="display: flex; gap: 1rem;">
+                    <input type="text" id="issueId" class="form-control" 
+                           placeholder="e.g., SEVA123456" style="flex: 1;">
+                    <button onclick="trackIssue()" class="btn btn-primary">Track</button>
+                </div>
+            </div>
+
+            <div id="tracking-result"></div>
+        </div>
+
+        <div class="card">
+            <h2>💡 Tips</h2>
+            <ul style="line-height: 2;">
+                <li>Your Issue ID was provided when you submitted your report</li>
+                <li>Issue IDs start with "SEVA" followed by numbers</li>
+                <li>Keep your Issue ID safe for future reference</li>
+                <li>You can bookmark this page for easy access</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function trackIssue() {
+            const issueId = document.getElementById('issueId').value.trim();
+            const resultDiv = document.getElementById('tracking-result');
+            
+            if (!issueId) {
+                resultDiv.innerHTML = '<div class="alert alert-error">Please enter an Issue ID</div>';
+                return;
+            }
+
+            try {
+                resultDiv.innerHTML = '<div style="text-align: center; padding: 2rem;"><div class="loading"></div> Searching...</div>';
+                
+                const response = await fetch(`/api/issues/${issueId}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        resultDiv.innerHTML = '<div class="alert alert-error">Issue not found. Please check your Issue ID.</div>';
+                    } else {
+                        resultDiv.innerHTML = '<div class="alert alert-error">Error fetching issue details.</div>';
+                    }
+                    return;
+                }
+                
+                const issue = await response.json();
+                displayIssueDetails(issue);
+                
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="alert alert-error">Network error. Please try again.</div>';
+            }
+        }
+
+        function displayIssueDetails(issue) {
+            const resultDiv = document.getElementById('tracking-result');
+            const createdDate = new Date(issue.createdAt).toLocaleDateString('en-IN');
+            const updatedDate = new Date(issue.updatedAt).toLocaleDateString('en-IN');
+            
+            let statusClass = 'status-pending';
+            let statusIcon = '⏳';
+            if (issue.status === 'In Progress') {
+                statusClass = 'status-progress';
+                statusIcon = '🔄';
+            } else if (issue.status === 'Resolved') {
+                statusClass = 'status-resolved';
+                statusIcon = '✅';
+            }
+
+            const photoHtml = issue.photoUrl ? 
+                `<div style="margin-top: 1rem;">
+                    <strong>Photo:</strong><br>
+                    <img src="${issue.photoUrl}" alt="Issue photo" class="image-preview">
+                </div>` : '';
+
+            const locationHtml = issue.location && issue.location.address ? 
+                `<p><strong>Location:</strong> ${issue.location.address}</p>` : '';
+
+            resultDiv.innerHTML = `
+                <div class="alert alert-success">Issue found! Here are the details:</div>
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-id">${issue.issueId}</div>
+                        <div class="status-badge ${statusClass}">${statusIcon} ${issue.status}</div>
+                    </div>
+                    <div class="issue-meta">
+                        <p><strong>Reporter:</strong> ${issue.name}</p>
+                        <p><strong>Village:</strong> ${issue.village}</p>
+                        <p><strong>Category:</strong> ${issue.category}</p>
+                        ${locationHtml}
+                        <p><strong>Reported on:</strong> ${createdDate}</p>
+                        <p><strong>Last updated:</strong> ${updatedDate}</p>
+                    </div>
+                    <div class="issue-description">
+                        <strong>Description:</strong><br>
+                        ${issue.description}
+                    </div>
+                    ${photoHtml}
+                </div>
+            `;
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById('issueId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                trackIssue();
+            }
+        });
+
+        // Auto-fill from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const issueIdParam = urlParams.get('id');
+        if (issueIdParam) {
+            document.getElementById('issueId').value = issueIdParam;
+            trackIssue();
+        }
+    </script>
+</body>
+</html>
